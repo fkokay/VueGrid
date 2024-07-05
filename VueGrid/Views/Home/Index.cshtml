@@ -5,8 +5,15 @@
 <div class="cph">
     <div class="datagrid-root">
         <sm-datagrid id="products-grid" :options="options" :data-source="dataSource" :columns="columns" :paging="paging" :sorting="sorting">
+
             <template v-slot:toolbar="grid">
                 <div class="dg-toolbar btn-toolbar d-flex flex-nowrap">
+                    <div class="dg-toolbar-group">
+                        <button type="button" class="btn btn-light btn-icon dg-search-toggle" href="#" v-bind:class="{ 'active': options.showSearch }" v-on:click="options.showSearch = !options.showSearch">
+                            <i class="fa fa-fw fa-filter"></i>
+                            <span v-if="grid.numSearchFilters > 0" class="badge badge-pill badge-danger badge-counter badge-counter-ring edge-top-end edge-inset dg-toolbar-badge">{{ grid.numSearchFilters }}</span>
+                        </button>
+                    </div>
                     <div class="dg-toolbar-group">
                         <a class="btn btn-primary btn-flat no-anims mr-auto" href="/admin/product/create/">
                             <i class="fa fa-plus"></i>
@@ -32,7 +39,24 @@
                     </div>
                 </div>
             </template>
-            <template v-slot:search="grid"></template>
+            <template v-slot:search="grid">
+
+                <div class="form-group">
+                    <div class="ctl-label">
+                        <label for="SearchProductName">Ürün adı</label><a class="hint" href="#" onclick="return false;" tabindex="-1" title="Ürün adı."><i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <div class="has-icon has-icon-right">
+                        <input type="text" class="form-control" id="SearchProductName" name="SearchProductName" value="">
+                        <span class="input-group-icon">
+                            <a href="javascript:;" class="search-expression-toggle">
+                                <i class="fa fa-circle-question"></i>
+                            </a>
+                        </span>
+                    </div>
+
+
+                </div>
+            </template>
         </sm-datagrid>
         <div class="datagrid-loader spinner-container w-100 h-100 active">
             <div class="spinner"><svg style="width:64px; height:64px" viewBox="0 0 64 64"><circle class="circle" cx="32" cy="32" r="30" fill="none" stroke-width="2"></circle></svg></div>

@@ -6,7 +6,7 @@ namespace VueGrid.Controllers
     public class ProductController : Controller
     {
         [HttpPost]
-        public IActionResult Productlist(GridCommand command)
+        public IActionResult Productlist(GridCommand command, ProductListModel model)
         {
             List<ProductViewModel> products = new List<ProductViewModel>();
             products.Add(new ProductViewModel() { Id = 1, Code = "A15", Name = "ASUS TUF GAMING A15", Price = 31000 });
@@ -42,7 +42,7 @@ namespace VueGrid.Controllers
 
             return Json(new GridModel<ProductViewModel>
             {
-                rows = products.Skip((command.Page * command.PageSize) - command.PageSize).Take(command.PageSize),
+                rows = products.Where(m => m.Name.Contains(model.SearchProductName)).Skip((command.Page * command.PageSize) - command.PageSize).Take(command.PageSize),
                 total = products.Count,
             });
         }
