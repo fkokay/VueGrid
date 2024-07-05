@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VueGrid</title>
+
+    <script sm-target-zone="head_scripts" data-origin="client-res">
+        window.Res = {};
+        window.ClientId = "1";
+    </script>
+
+    <script src="/lib/jquery/jquery-3.7.1.js"></script>
+    <script src="/lib/vue/vue.js"></script>
+
+    <link href="/lib/fontastic/fontastic.css" rel="stylesheet" type="text/css">
+    <link href="/lib/fa6/css/all.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/css/admin-theme.css">
+
+    <link as="font" rel="preload" href="/lib/fontastic/fonts/fontastic.woff" />
+    <link as="font" rel="preload" href="/lib/fa6/webfonts/fa-solid-900.woff2" />
+    <link as="font" rel="preload" href="/lib/fa6/webfonts/fa-regular-400.woff2" />
+</head>
+<body class="spa-layout">
+    <div class="page">
+        <div class="page-main">
+            <div id="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="/lib/jquery/jquery.validate.min.js"></script>
+    <script src="/lib/jquery/jquery.serializeToJSON.min.js"></script>
+    <script src="/lib/underscore/underscore.min.js"></script>
+    <script src="/lib/modernizr/modernizr.js"></script>
+    <script src="/lib/moment/moment.js"></script>
+    <script src="~/lib/popper/popper.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="/js/logimat.system.js"></script>
+    <script src="/js/logimat.globalization.js"></script>
+    <script src="/components/datagrid/datagrid.js"></script>
+    <script src="/components/datagrid/datagrid-pager.js"></script>
+    <script src="/components/datagrid/datagrid-tools.js"></script>
+
+    <script src="/lib/moment/locale/tr.js" charset="UTF-8"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

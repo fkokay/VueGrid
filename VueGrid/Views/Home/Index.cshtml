@@ -1,0 +1,192 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="cph">
+    <div class="datagrid-root">
+        <sm-datagrid id="products-grid" :options="options" :data-source="dataSource" :columns="columns" :paging="paging" :sorting="sorting">
+            <template v-slot:toolbar="grid">
+                <div class="dg-toolbar btn-toolbar d-flex flex-nowrap">
+                    <div class="dg-toolbar-group">
+                        <a class="btn btn-primary btn-flat no-anims mr-auto" href="/admin/product/create/">
+                            <i class="fa fa-plus"></i>
+                            <span>Yeni ekle...</span>
+                        </a>
+                        <button type="button" class="btn btn-warning no-anims btn-flat" href="#" v-if="grid.editing.active" v-on:click.prevent="grid.saveChanges">
+                            <i class="fa fa-check"></i>
+                            <span>Değişiklikleri kaydet</span>
+                        </button>
+                        <button type="button" class="btn btn-light btn-flat mr-auto" href="#" v-if="grid.editing.active" v-on:click.prevent="grid.cancelEdit">
+                            <span>İptal et</span>
+                        </button>
+                    </div>
+
+                    <div class="omega dg-toolbar-group"></div>
+
+                    <div class="dg-toolbar-group">
+                        <button type="button" class="btn btn-danger no-anims btn-flat" href="#" v-bind:class="{ 'disabled': !grid.hasSelection }" v-on:click.prevent="grid.deleteSelectedRows">
+                            <i class="far fa-trash-can"></i>
+                            <span>Seçileni sil</span>
+                            <span v-if="grid.hasSelection" class="badge badge-success badge-counter">{{ grid.selectedRowsCount }}</span>
+                        </button>
+                    </div>
+                </div>
+            </template>
+            <template v-slot:search="grid"></template>
+        </sm-datagrid>
+        <div class="datagrid-loader spinner-container w-100 h-100 active">
+            <div class="spinner"><svg style="width:64px; height:64px" viewBox="0 0 64 64"><circle class="circle" cx="32" cy="32" r="30" fill="none" stroke-width="2"></circle></svg></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            window.Res.DataGrid = {
+                "saveChanges": "Değişiklikleri kaydet",
+                "filter": "Filtre",
+                "cancel": "İptal et",
+                "resetState": "Sıfırla",
+                "fitColumns": "Sütunları ayarlayın",
+                "noData": "Veri yok",
+                "vborders": "Kurallı çizgiler",
+                "hborders": "Astarlı sütunlar",
+                "striped": "Çizgili",
+                "hover": "Fare üzerine geldiğinde",
+                "pagerPos": "Çağrı Cihazı",
+                "pagerTop": "Üst",
+                "pagerBottom": "Aşağıda",
+                "pagerBoth": "Üst ve alt",
+                "xPerPage": "<span class='d-none d-sm-inline'>Her sayfada</span> <span class='fwm'>{0}</span><span class='d-none d-sm-inline'> kayıt</span>",
+                "displayingItems": "Kayıtları göster  {0}-{1} / Toplam {2}",
+                "displayingItemsShort": "{0} - {1} / {2}",
+                "confirmDelete": "Kayıt geri dönülmez bir şekilde silinecek, devam edilsin mi?",
+                "confirmDeleteMany": "Seçilen {0} öğeyi kalıcı olarak silmek istiyor musunuz?",
+                "deleteSuccess": "{0} öğe başarıyla silindi."
+            };
+            window['products-grid'] = new Vue({
+                "el": "#products-grid",
+                "data": {
+                    "options": {
+                        "vborders": true,
+                        "hborders": false,
+                        "striped": true,
+                        "hover": true,
+                        "keyMemberName": "Id",
+                        "allowResize": true,
+                        "allowRowSelection": true,
+                        "allowColumnReordering": true,
+                        "allowEdit": true,
+                        "hideHeader": false,
+                        "stickyFooter": true,
+                        "showSearch": false,
+                        "preserveSearchState": true,
+                        "stateKey": "products-grid",
+                        "preserveState": true,
+                        "version": 2,
+                        "defaultDataRow": {
+                            "Id": 0,
+                            "id": 0,
+                            "CustomProperties": {}
+                        },
+                        "antiforgeryToken": "CfDJ8JCksuFhNINOtCzWfTEOXAeakQkEA28D08zTytESoX_OgHt9QDfy9a8_2i3_ElGBYnfzEVdvPEMDnx8WrWGlPnSq11DWJTkXf70tcvquKpAgCDiUN14YORknmNIZbd2EZE8iREiFBMwN8OcTXnOzML3XkI9XdAETvH8YfYgyLyggbn7z6BNEq1kiW-DaWljvjg"
+                    },
+                    "dataSource": {
+                        "read": "/product/productlist/",
+                        "update": "/product/productupdate/",
+                        "del": "/product/productdelete/"
+                    },
+                    "columns": [
+
+                        {
+                            "member": "Code",
+                            "name": "Code",
+                            "title": "Kodu",
+                            "width": "3fr",
+                            "visible": true,
+                            "type": "string",
+                            "nullable": false,
+                            "resizable": true,
+                            "sortable": true,
+                            "filterable": true,
+                            "groupable": true,
+                            "hideable": false,
+                            "editable": true,
+                            "reorderable": true,
+                            "wrap": false,
+                            "encoded": false
+                        },
+                        {
+                            "member": "Name",
+                            "name": "Name",
+                            "title": "Ürün adı",
+                            "width": "3fr",
+                            "visible": true,
+                            "type": "string",
+                            "nullable": false,
+                            "resizable": true,
+                            "sortable": true,
+                            "filterable": true,
+                            "groupable": true,
+                            "hideable": false,
+                            "editable": true,
+                            "reorderable": true,
+                            "wrap": false,
+                            "encoded": false
+                        },
+                        {
+                            "member": "Price",
+                            "name": "Price",
+                            "title": "Fiyatı",
+                            "width": "3fr",
+                            "visible": true,
+                            "type": "float",
+                            "nullable": false,
+                            "resizable": true,
+                            "sortable": true,
+                            "filterable": true,
+                            "groupable": true,
+                            "hideable": false,
+                            "editable": true,
+                            "reorderable": true,
+                            "wrap": false,
+                            "encoded": false
+                        }
+
+                    ],
+                    "paging": {
+                        "enabled": true,
+                        "pageSize": 25,
+                        "pageIndex": 1,
+                        "position": "bottom",
+                        "showSizeChooser": true,
+                        "showInfo": true,
+                        "availableSizes": [
+                            25,
+                            50,
+                            100,
+                            150,
+                            200
+                        ]
+                    },
+                    "sorting": {
+                        "enabled": true,
+                        "allowUnsort": true,
+                        "allowMultiSort": false,
+                        "descriptors": []
+                    },
+                    "filtering": {},
+                    "numSearchFilters": 0,
+                    "dragging": {
+                        "active": false
+                    },
+                    "editing": {
+                        "active": false
+                    }
+                }
+            });
+        })
+    </script>
+}
